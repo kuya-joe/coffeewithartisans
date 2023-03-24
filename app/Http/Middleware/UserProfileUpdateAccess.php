@@ -23,7 +23,7 @@ class UserProfileUpdateAccess
         $userLoggedIn = Auth::user()->id;
         $userForm =  $request->input('id') ?? 0;
 
-     //hacking attempt
+       //hacking attempt
      if($userLoggedIn !== $userForm) {
          $this->_logoutAndRedirectUser('login');
      }

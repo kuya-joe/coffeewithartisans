@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\UserProfileUpdateAccess;
 use App\Http\Controllers\Api\Posts\{PostsDestroyController, PostsIndexController, PostsShowController, PostsStoreController, PostsUpdateController};
-use App\Http\Controllers\Api\Users\{UsersDestroyController, UsersIndexController, UsersShowController, UsersUpdateController};
+use App\Http\Controllers\Api\Users\{UserUpdateController, UserEditController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,20 +17,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::middleware(UserProfileUpdateAccess::class)->group(function () {
+        Route::get('/{user}/edit', UserEditController::class);
+        Route::get('/{user}/save', UserUpdateController::class);
+});
 
-Route::middleware(['auth:sanctum', 'cache.headers:public;max_age=60;etag', 'treblle'])->group(function () {
-    Route::prefix('users')->group(function () {
-        Route::get('/', UsersIndexController::class)->name('users.index');
-        Route::get('/{user}', UsersShowController::class)->name('users.show');
-        Route::match(['put', 'patch'], '/{user}', UsersUpdateController::class)->name('users.update');
-        Route::delete('/{user}', UsersDestroyController::class)->name('users.destroy');
-    });
-
-    Route::prefix('posts')->group(function () {
-        Route::get('/', PostsIndexController::class)->name('posts.index');
-        Route::post('/', PostsStoreController::class)->name('posts.store');
-        Route::get('/{post}', PostsShowController::class)->name('posts.show');
-        Route::match(['put', 'patch'], '/{post}', PostsUpdateController::class)->name('posts.update');
-        Route::delete('/{post}', PostsDestroyController::class)->name('posts.destroy');
+Route::middleware(['cache.headers:public;max_age=60;etag'])->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::get('/login', 'LoginController@getLogin')->name('user.login');
+        Route::post('/login', 'LoginController@authenticate')->name('user.authenticate');
     });
 });

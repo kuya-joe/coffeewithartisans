@@ -11,6 +11,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\UserProfileUpdateAccess;
 use Fruitcake\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
@@ -77,14 +78,15 @@ final class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
-        'auth'             => Authenticate::class,
-        'auth.basic'       => AuthenticateWithBasicAuth::class,
-        'cache.headers'    => SetCacheHeaders::class,
-        'can'              => Authorize::class,
-        'guest'            => RedirectIfAuthenticated::class,
-        'password.confirm' => RequirePassword::class,
-        'signed'           => ValidateSignature::class,
-        'throttle'         => ThrottleRequests::class,
-        'verified'         => EnsureEmailIsVerified::class,
+        'auth'              => Authenticate::class,
+        'auth.basic'        => AuthenticateWithBasicAuth::class,
+        'cache.headers'     => SetCacheHeaders::class,
+        'can'               => Authorize::class,
+        'guest'             => RedirectIfAuthenticated::class,
+        'password.confirm'  => RequirePassword::class,
+        'signed'            => ValidateSignature::class,
+        'throttle'          => ThrottleRequests::class,
+        'verified'          => EnsureEmailIsVerified::class,
+        'userprofile.update' => UserUpdateProfileAccess::class,
     ];
 }
