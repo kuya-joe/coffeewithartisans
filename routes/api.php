@@ -24,7 +24,7 @@ Route::middleware(UserProfileUpdateAccess::class)->group(function () {
 
 Route::middleware(['cache.headers:public;max_age=60;etag'])->group(function () {
     Route::prefix('auth')->group(function () {
-        Route::get('/login', 'LoginController@getLogin')->name('user.login');
-        Route::post('/login', 'LoginController@authenticate')->name('user.authenticate');
+        Route::get('/login', 'Api/LoginController@getLogin')->name('user.login');
+        Route::post('/login', 'Api/LoginController@authenticate')->name('user.authenticate');
     });
 });

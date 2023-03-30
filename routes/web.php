@@ -3,18 +3,21 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| GET /register (open) this registers without an api key
+| GET /profile - view your profile (if loggedin)
+| GET /profile/edit - Display edit profile form  
 |
 */
 
 Route::get('/', function () {
-    return 'hey there!';
+    return view('welcome ', ['message' => 'Hey Artisan']);
 });
+
+Route::get('/register', RegisterController::class);
